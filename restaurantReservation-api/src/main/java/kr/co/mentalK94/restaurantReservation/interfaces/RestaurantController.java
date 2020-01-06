@@ -1,7 +1,10 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
+import kr.co.mentalK94.restaurantReservation.domain.MenuItem;
+import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepository;
 import kr.co.mentalK94.restaurantReservation.domain.Restaurant;
 import kr.co.mentalK94.restaurantReservation.domain.RestaurantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +15,11 @@ import java.util.List;
 @RestController
 public class RestaurantController {
 
-    private RestaurantRepository restaurantRepository = new RestaurantRepository();
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private MenuItemRepository menuItemRepository;
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
@@ -38,6 +45,9 @@ public class RestaurantController {
         // 따라서 findAll이 아닌 findById(id)로 찾은 후 리턴해주어야 한다.
 //        List<Restaurant> restaurantList = restaurantRepository.findAll();
         Restaurant restaurant = restaurantRepository.findById(id);
+
+        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantById(id);
+        restaurant.setMenuItems(menuItems);
 
         return restaurant;
     }

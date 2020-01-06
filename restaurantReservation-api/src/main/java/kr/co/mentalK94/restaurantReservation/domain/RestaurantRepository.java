@@ -1,8 +1,11 @@
 package kr.co.mentalK94.restaurantReservation.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class RestaurantRepository {
 
     List<Restaurant> restaurantList = new ArrayList<>();
