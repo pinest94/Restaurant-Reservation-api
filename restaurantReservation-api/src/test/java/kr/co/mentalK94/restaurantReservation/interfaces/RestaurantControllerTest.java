@@ -1,5 +1,6 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
+import kr.co.mentalK94.restaurantReservation.application.RestaurantService;
 import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepository;
 import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepositoryImpl;
 import kr.co.mentalK94.restaurantReservation.domain.RestaurantRepository;
@@ -27,11 +28,11 @@ public class RestaurantControllerTest {
     @SpyBean(RestaurantRepositoryImpl.class)
     private RestaurantRepository restaurantRepository;
 
-    @SpyBean(RestaurantRepository.class)
-    private RestaurantRepository RestaurantRepository;
-
     @SpyBean(MenuItemRepositoryImpl.class)
     private MenuItemRepository menuItemRepository;
+
+    @SpyBean(RestaurantService.class)
+    private RestaurantService restaurantService;
 
     @Test
     public void list() throws Exception {

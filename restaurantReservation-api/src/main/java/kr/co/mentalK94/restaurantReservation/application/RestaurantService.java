@@ -18,6 +18,11 @@ public class RestaurantService {
     @Autowired
     MenuItemRepository menuItemRepository;
 
+    public RestaurantService(RestaurantRepository restaurantRepository, MenuItemRepository menuItemRepository) {
+        this.menuItemRepository = menuItemRepository;
+        this.restaurantRepository = restaurantRepository;
+    }
+
     public Restaurant getRestaurantById(Long id) {
 
         Restaurant restaurant = restaurantRepository.findById(id);
@@ -25,5 +30,10 @@ public class RestaurantService {
         restaurant.setMenuItems(menuItems);
 
         return restaurant;
+    }
+
+    public List<Restaurant> getRestaurants() {
+        List<Restaurant> restaurantList = restaurantRepository.findAll();
+        return restaurantList;
     }
 }
