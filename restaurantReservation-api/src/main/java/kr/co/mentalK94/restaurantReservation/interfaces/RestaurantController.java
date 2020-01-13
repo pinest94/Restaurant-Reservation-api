@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,8 +44,8 @@ public class RestaurantController {
 //        restaurantList.add(new Restaurant(2020L, "Cyber Food", "Seoul"));
 //        restaurantList.add(new Restaurant(2023L, "Cutlet Food", "Seoul"));
 
-        // ê·¸ëŸ°ë° ì—¬ê¸°ì„œ findAllë¡œ ëª¨ë‘ ì°¾ì€ ë’¤ idê°’ìœ¼ë¡œ í•´ë‹¹ ê°ì²´ ì°¾ëŠ” ì—­í• ì„ ì—¬ê¸°ì„œ í•˜ëŠ” ê²ƒì€ ì˜³ì§€ ì•Šë‹¤.
-        // ë”°ë¼ì„œ findAllì´ ì•„ë‹Œ findById(id)ë¡œ ì°¾ì€ í›„ ë¦¬í„´í•´ì£¼ì–´ì•¼ í•œë‹¤.
+        // ±×·±µ¥ ¿©±â¼­ findAll·Î ¸ğµÎ Ã£Àº µÚ id°ªÀ¸·Î ÇØ´ç °´Ã¼ Ã£´Â ¿ªÇÒÀ» ¿©±â¼­ ÇÏ´Â °ÍÀº ¿ÇÁö ¾Ê´Ù.
+        // µû¶ó¼­ findAllÀÌ ¾Æ´Ñ findById(id)·Î Ã£Àº ÈÄ ¸®ÅÏÇØÁÖ¾î¾ß ÇÑ´Ù.
 //        List<Restaurant> restaurantList = restaurantRepository.findAll();
 
         // -----------------------------------------------------------------------------------
@@ -55,7 +54,7 @@ public class RestaurantController {
 //        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantById(id);
 //        restaurant.setMenuItems(menuItems);
 
-        // ê¸°ë³¸ ì •ë³´ + ë©”ë‰´ ì •ë³´
+        // ±âº» Á¤º¸ + ¸Ş´º Á¤º¸
         Restaurant restaurant = restaurantService.getRestaurantById(id);
 
 

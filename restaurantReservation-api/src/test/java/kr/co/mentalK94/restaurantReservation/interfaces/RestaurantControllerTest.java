@@ -3,6 +3,7 @@ package kr.co.mentalK94.restaurantReservation.interfaces;
 import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepository;
 import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepositoryImpl;
 import kr.co.mentalK94.restaurantReservation.domain.RestaurantRepository;
+import kr.co.mentalK94.restaurantReservation.domain.RestaurantRepositoryImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class RestaurantControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @SpyBean(RestaurantRepositoryImpl.class)
+    private RestaurantRepository restaurantRepository;
 
     @SpyBean(RestaurantRepository.class)
     private RestaurantRepository RestaurantRepository;
