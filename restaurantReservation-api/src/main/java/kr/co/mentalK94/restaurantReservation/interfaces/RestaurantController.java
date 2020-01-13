@@ -1,5 +1,6 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
+import kr.co.mentalK94.restaurantReservation.application.RestaurantService;
 import kr.co.mentalK94.restaurantReservation.domain.MenuItem;
 import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepository;
 import kr.co.mentalK94.restaurantReservation.domain.Restaurant;
@@ -20,6 +21,9 @@ public class RestaurantController {
 
     @Autowired
     private MenuItemRepository menuItemRepository;
+
+    @Autowired
+    private RestaurantService restaurantService;
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
@@ -44,10 +48,17 @@ public class RestaurantController {
         // 그런데 여기서 findAll로 모두 찾은 뒤 id값으로 해당 객체 찾는 역할을 여기서 하는 것은 옳지 않다.
         // 따라서 findAll이 아닌 findById(id)로 찾은 후 리턴해주어야 한다.
 //        List<Restaurant> restaurantList = restaurantRepository.findAll();
-        Restaurant restaurant = restaurantRepository.findById(id);
 
-        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantById(id);
-        restaurant.setMenuItems(menuItems);
+        // -----------------------------------------------------------------------------------
+//        Restaurant restaurant = restaurantRepository.findById(id);
+//
+//        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantById(id);
+//        restaurant.setMenuItems(menuItems);
+
+        // 기본 정보 + 메뉴 정보
+        Restaurant restaurant = restaurantService.getRestaurantById(id);
+
+
 
         return restaurant;
     }
