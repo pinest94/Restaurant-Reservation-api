@@ -7,10 +7,14 @@ import java.util.List;
 
 public class Restaurant {
 
-    private final String name;
+    private String name;
     private String address;
     private Long id;
     private List<MenuItem> menuItems = new ArrayList<>();
+
+    public Restaurant() {
+
+    }
 
     public Restaurant(Long id, String name, String address) {
         this.id = id;

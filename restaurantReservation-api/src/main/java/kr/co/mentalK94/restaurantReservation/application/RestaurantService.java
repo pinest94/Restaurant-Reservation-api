@@ -36,4 +36,8 @@ public class RestaurantService {
         List<Restaurant> restaurantList = restaurantRepository.findAll();
         return restaurantList;
     }
+
+    public void addRestaurant(Restaurant restaurant) {
+        //
+    }
 }

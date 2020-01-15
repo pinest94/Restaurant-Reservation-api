@@ -62,9 +62,4 @@ public class RestaurantServiceTest {
         Restaurant restaurant = restaurants.get(0);
         assertThat(restaurant.getId(), is(2020L));
     }
-
-    @Test
-    public void create() {
-
-    }
 }
