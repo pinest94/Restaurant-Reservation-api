@@ -25,4 +25,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     public Restaurant findById(Long id) {
         return restaurantList.stream().filter(r->r.getId().equals(id)).findFirst().orElse(null);
     }
+
+    @Override
+    public Restaurant save(Restaurant restaurant) {
+        restaurant.setId(1234L);
+        restaurantList.add(restaurant);
+        return restaurant;
+    }
 }
