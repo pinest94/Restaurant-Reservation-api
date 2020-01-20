@@ -28,7 +28,7 @@ public class RestaurantController {
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id") Long id) {
 
-        // ±âº» Á¤º¸ + ¸Ş´º Á¤º¸
+        // ê¸°ë³¸ì •ë³´ + ë©”ë‰´ì •ë³´
         Restaurant restaurant = restaurantService.getRestaurantById(id);
 
         return restaurant;
@@ -39,7 +39,7 @@ public class RestaurantController {
         String name = resource.getName();
         String address = resource.getAddress();
 
-        Restaurant restaurant = new Restaurant(1234L, name, address);
+        Restaurant restaurant = new Restaurant(name, address);
         restaurantService.addRestaurant(restaurant);
 
         URI location = new URI("/restaurants/" + restaurant.getId());

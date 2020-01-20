@@ -77,7 +77,7 @@ public class RestaurantControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name:Bukyung\", \"address:Gunpo\"}"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "/restaurants/1234"))
+                .andExpect(header().string("location", "/restaurants/1"))
                 .andExpect(content().string("{}"));
 
         verify(restaurantService).addRestaurant(any());

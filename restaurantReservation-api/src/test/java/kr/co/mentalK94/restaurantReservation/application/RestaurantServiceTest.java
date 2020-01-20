@@ -37,7 +37,7 @@ public class RestaurantServiceTest {
     private void mockMenuItemRepository() {
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(new MenuItem("Kimchi"));
-        given(menuItemRepository.findAllByRestaurantById(2020L)).willReturn(menuItems);
+        given(menuItemRepository.findAllByRestaurantId(2020L)).willReturn(menuItems);
     }
 
     private void mockRestaurantRepository() {
@@ -46,7 +46,7 @@ public class RestaurantServiceTest {
         restaurants.add(restaurant);
 
         given(restaurantRepository.findAll()).willReturn(restaurants);
-        given(restaurantRepository.findById(2020L)).willReturn(restaurant);
+        given(restaurantRepository.findById(2020L)).willReturn(java.util.Optional.of(restaurant));
     }
 
     @Test

@@ -1,9 +1,10 @@
 package kr.co.mentalK94.restaurantReservation.domain;
 
-import org.springframework.stereotype.Component;
+
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface MenuItemRepository {
-    List<MenuItem> findAllByRestaurantById(Long id);
+public interface MenuItemRepository extends CrudRepository<MenuItem, Long> {
+    List<MenuItem> findAllByRestaurantId(Long id);
 }
