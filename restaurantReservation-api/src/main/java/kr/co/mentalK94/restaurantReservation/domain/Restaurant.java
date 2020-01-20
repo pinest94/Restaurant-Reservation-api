@@ -69,4 +69,12 @@ public class Restaurant {
     public void setId(long id) {
         this.id = id;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
