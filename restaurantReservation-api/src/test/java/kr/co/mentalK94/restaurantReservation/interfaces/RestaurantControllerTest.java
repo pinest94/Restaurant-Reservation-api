@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -36,7 +37,7 @@ public class RestaurantControllerTest {
     public void list() throws Exception {
 
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant(1103L, "Lotteria", "Anyang"));
+        restaurants.add(Restaurant.builder().id(1103L).name("Lotteria").address("Anyang").build());
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -49,10 +50,10 @@ public class RestaurantControllerTest {
     @Test
     public void detailTest() throws Exception{
 
-        Restaurant restaurant1 = new Restaurant(1001L, "pizza school", "Anyang");
-        restaurant1.addMenuItem(new MenuItem("potato pizza"));
-        Restaurant restaurant2 = new Restaurant(2020L, "yellow chicken", "Seoul");
-        restaurant2.addMenuItem(new MenuItem("fried chicken"));
+        Restaurant restaurant1 = Restaurant.builder().id(1001L).name("pizza school").address("Anyang").build();
+        restaurant1.setMenuItems(Arrays.asList(MenuItem.builder().name("potato pizza").build()));
+        Restaurant restaurant2 = Restaurant.builder().id(2020L).name("yellow chicken").address("Seoul").build();
+        restaurant2.setMenuItems(Arrays.asList(MenuItem.builder().name("fried chicken").build()));
 
         given(restaurantService.getRestaurantById(1001L)).willReturn(restaurant1);
         given(restaurantService.getRestaurantById(2020L)).willReturn(restaurant2);
@@ -72,6 +73,15 @@ public class RestaurantControllerTest {
 
     @Test
     public void create() throws Exception {
+        given(restaurantService.addRestaurant(any())).will(invocation -> {
+            Restaurant restaurant = invocation.getArgument(0);
+            return Restaurant.builder()
+                        .id(1L)
+                        .name(restaurant.getName())
+                        .address(restaurant.getAddress())
+                        .build();
+        });
+
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Bukyung\", \"address\":\"Gunpo\"}"))

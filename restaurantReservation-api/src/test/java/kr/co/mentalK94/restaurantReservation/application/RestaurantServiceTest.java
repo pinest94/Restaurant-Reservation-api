@@ -36,7 +36,9 @@ public class RestaurantServiceTest {
 
     private void mockMenuItemRepository() {
         List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem("Kimchi"));
+        menuItems.add(MenuItem.builder()
+                .name("Kimchi")
+                .build());
         given(menuItemRepository.findAllByRestaurantId(2020L)).willReturn(menuItems);
     }
 
@@ -46,7 +48,6 @@ public class RestaurantServiceTest {
                 .id(2020L)
                 .name("Bob zip")
                 .address("Seoul")
-                .menuItems(new ArrayList<MenuItem>())
                 .build();
 
         restaurants.add(restaurant);
@@ -72,22 +73,31 @@ public class RestaurantServiceTest {
 
     @Test
     public void addRestaurant() {
-        Restaurant restaurant = new Restaurant("Bukyung", "Gunpo");
+        given(restaurantRepository.save(any())).will(invocation -> {
+            Restaurant restaurant = invocation.getArgument(0);
+            restaurant.setId(1234L);
+            return restaurant;
+        });
 
-        given(restaurantRepository.save(any())).willReturn(restaurant);
+        Restaurant restaurant = Restaurant.builder().name("Bukyung").address("Gunpo").build();
 
         Restaurant created = restaurantService.addRestaurant(restaurant);
 
+        assertThat(created.getId(), is(1234L));
         assertThat(created.getName(), is("Bukyung"));
     }
 
     @Test
     public void updateRestaurant() {
-        Restaurant restaurant = new Restaurant(1004L, "Bob zip", "Seoul");
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("Bob zip")
+                .address("Seoul")
+                .build();
 
         given(restaurantRepository.findById(1004L)).willReturn(java.util.Optional.of(restaurant));
         Restaurant updatedRestaurant = restaurantService.updateRestaurant(1004L, "cafe", "Busan");
-        assertThat(restaurant.getName(), is("cafe"));
-        assertThat(restaurant.getAddress(), is("Busan"));
+        assertThat(restaurant.getName(), is(updatedRestaurant.getName()));
+        assertThat(restaurant.getAddress(), is(updatedRestaurant.getAddress()));
     }
 }
