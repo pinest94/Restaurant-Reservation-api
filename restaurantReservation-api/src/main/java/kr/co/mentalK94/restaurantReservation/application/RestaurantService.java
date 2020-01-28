@@ -1,9 +1,6 @@
 package kr.co.mentalK94.restaurantReservation.application;
 
-import kr.co.mentalK94.restaurantReservation.domain.MenuItem;
-import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepository;
-import kr.co.mentalK94.restaurantReservation.domain.Restaurant;
-import kr.co.mentalK94.restaurantReservation.domain.RestaurantRepository;
+import kr.co.mentalK94.restaurantReservation.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +23,7 @@ public class RestaurantService {
 
     public Restaurant getRestaurantById(Long id) {
 
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException(id));
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);
 

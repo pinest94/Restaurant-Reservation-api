@@ -48,7 +48,7 @@ public class RestaurantControllerTest {
     }
 
     @Test
-    public void detailTest() throws Exception{
+    public void detailWithExistedTest() throws Exception{
 
         Restaurant restaurant1 = Restaurant.builder().id(1001L).name("pizza school").address("Anyang").build();
         restaurant1.setMenuItems(Arrays.asList(MenuItem.builder().name("potato pizza").build()));
@@ -69,6 +69,16 @@ public class RestaurantControllerTest {
                 .andExpect(content().string(containsString("\"id\":2020")))
                 .andExpect(content().string(containsString("\"name\":\"yellow chicken\"")))
                 .andExpect(content().string(containsString("fried chicken")));
+    }
+
+    @Test
+    public void detailWithNotExistedTest() throws Exception{
+
+        given(restaurantService.getRestaurantById(404L)).willThrow(new RestaurantNotFoundException(404L));
+
+        mvc.perform(get("/restaurant/404"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{}"));
     }
 
     @Test
