@@ -42,7 +42,6 @@ public class RestaurantController {
         String address = resource.getAddress();
 
         Restaurant restaurant = Restaurant.builder()
-                    .id(1L)
                     .name(name)
                     .address(address)
                     .build();
