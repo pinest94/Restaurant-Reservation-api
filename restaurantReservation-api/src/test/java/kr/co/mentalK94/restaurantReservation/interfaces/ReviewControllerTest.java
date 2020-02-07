@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -33,33 +34,30 @@ public class ReviewControllerTest {
     @Test
     public void createWithValidAttributes() throws Exception{
 
-        given(reviewService.addReview(any())).willReturn(
+        given(reviewService.addReview(eq(1L), any())).willReturn(
                 Review.builder()
                 .id(123L)
-                .writer("good hansol")
-                .score(4.5)
-                .description("taste great!")
                 .build()
         );
 
         mvc.perform(post("/restaurants/1/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"writer\":\"hansol\", \"score\":5.0, \"description\":\"맛있어요!\"}"))
+                .content("{\"writer\":\"hansol\", \"score\":4.5, \"description\":\"taste great!\"}"))
                 .andExpect(header().string("location", "/restaurants/1/reviews/123"))
                 .andExpect(status().isCreated());
 
         // 위에 테스트가 완료되면 어떠한 일이 일어나는가?
-        verify(reviewService).addReview(any()); // 여기서 에러난다는 것은 addReview가 실행되지 않음을 의미
+        verify(reviewService).addReview(eq(1L), any()); // 여기서 에러난다는 것은 addReview가 실행되지 않음을 의미
     }
 
     @Test
     public void createWithInvalidAttributes() throws Exception{
-        mvc.perform(post("/restaurants/1/review")
+        mvc.perform(post("/restaurants/1/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"))
                 .andExpect(status().isBadRequest());
 
-        verify(reviewService, never()).addReview(any()); // 파라미터에 never()는 실행되지 않음을 의미
+        verify(reviewService, never()).addReview(eq(1L), any()); // 파라미터에 never()는 실행되지 않음을 의미
     }
 
 }

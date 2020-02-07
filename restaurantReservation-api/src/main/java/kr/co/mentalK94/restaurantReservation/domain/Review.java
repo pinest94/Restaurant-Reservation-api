@@ -21,6 +21,8 @@ public class Review {
     @Id
     private Long id;
 
+    private Long restaurantId; // 레스토랑 ID
+
     @NotEmpty
     private String writer; // 작성자
 
@@ -29,4 +31,5 @@ public class Review {
 
     @NotEmpty
     private String description; // 리뷰내용
+
 }
