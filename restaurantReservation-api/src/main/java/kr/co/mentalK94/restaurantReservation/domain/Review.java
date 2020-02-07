@@ -7,10 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,7 +24,9 @@ public class Review {
     @NotEmpty
     private String writer; // 작성자
 
+    @NotNull
     private double score; // 평점
 
+    @NotEmpty
     private String description; // 리뷰내용
 }

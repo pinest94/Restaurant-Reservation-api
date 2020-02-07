@@ -4,10 +4,7 @@ import kr.co.mentalK94.restaurantReservation.application.ReviewService;
 import kr.co.mentalK94.restaurantReservation.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -17,16 +14,17 @@ import java.net.URISyntaxException;
 public class ReviewController {
 
     @Autowired
-    ReviewService reviewService;
+    private ReviewService reviewService;
 
-    @PostMapping("/restaurants/{id}/review")
-    public ResponseEntity<?> create(@PathVariable("id") Long id) throws URISyntaxException {
-        Review review = Review.builder().build();
+    @PostMapping("/restaurants/{id}/reviews")
+    public ResponseEntity<?> create(@PathVariable("id") Long id,
+                                    @Valid @RequestBody Review resource)
+                                    throws URISyntaxException {
 
-        reviewService.addReview(review);
+        Review review = reviewService.addReview(resource);
 
-        URI location = new URI("/restaurants/1/review");
-        return ResponseEntity.created(location).body("{}");
+        String url = "/restaurants/"+id+"/reviews/" + review.getId();
+        return ResponseEntity.created(new URI(url)).body("{}");
     }
 
 }
