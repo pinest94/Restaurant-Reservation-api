@@ -50,25 +50,22 @@ public class RestaurantControllerTest {
     @Test
     public void detailWithExistedTest() throws Exception{
 
-        Restaurant restaurant1 = Restaurant.builder().id(1001L).name("pizza school").address("Anyang").build();
-        restaurant1.setMenuItems(Arrays.asList(MenuItem.builder().name("potato pizza").build()));
-        Restaurant restaurant2 = Restaurant.builder().id(2020L).name("yellow chicken").address("Seoul").build();
-        restaurant2.setMenuItems(Arrays.asList(MenuItem.builder().name("fried chicken").build()));
+        Restaurant restaurant = Restaurant.builder().id(1001L).name("pizza school").address("Anyang").build();
+        restaurant.setMenuItems(Arrays.asList(MenuItem.builder().name("potato pizza").build()));
+        Review review = Review.builder().writer("hansol").score(4.5).description("great tasty!").build();
 
-        given(restaurantService.getRestaurantById(1001L)).willReturn(restaurant1);
-        given(restaurantService.getRestaurantById(2020L)).willReturn(restaurant2);
+        restaurant.setReviews(Arrays.asList(review));
+
+        given(restaurantService.getRestaurantById(1001L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1001"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1001")))
                 .andExpect(content().string(containsString("\"name\":\"pizza school\"")))
+                .andExpect(content().string(containsString("hansol")))
+                .andExpect(content().string(containsString("great tasty!")))
                 .andExpect(content().string(containsString("potato pizza")));
 
-        mvc.perform(get("/restaurants/2020"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"id\":2020")))
-                .andExpect(content().string(containsString("\"name\":\"yellow chicken\"")))
-                .andExpect(content().string(containsString("fried chicken")));
     }
 
     @Test

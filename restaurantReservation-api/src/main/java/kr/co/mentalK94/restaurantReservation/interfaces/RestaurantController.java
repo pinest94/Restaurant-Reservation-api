@@ -17,8 +17,6 @@ public class RestaurantController {
 
     @Autowired
     private RestaurantService restaurantService;
-    private String name;
-    private String address;
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {

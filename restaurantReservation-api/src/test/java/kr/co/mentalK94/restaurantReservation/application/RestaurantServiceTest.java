@@ -13,7 +13,9 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 public class RestaurantServiceTest {
 
@@ -25,13 +27,28 @@ public class RestaurantServiceTest {
     @Mock
     private MenuItemRepository menuItemRepository;
 
+    @Mock
+    private ReviewRepository reviewRepository;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockRestaurantRepository();
         mockMenuItemRepository();
+        mockReviewRepository();
 
-        restaurantService = new RestaurantService(restaurantRepository, menuItemRepository);
+        restaurantService = new RestaurantService(restaurantRepository, menuItemRepository, reviewRepository);
+    }
+
+    private void mockReviewRepository() {
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(Review.builder()
+                .writer("sungjae")
+                .score(2.5)
+                .description("너무 맛없어...")
+                .build());
+
+        given(reviewRepository.findAllByRestaurantId(2020L)).willReturn(reviews);
     }
 
     private void mockMenuItemRepository() {
@@ -59,7 +76,15 @@ public class RestaurantServiceTest {
     @Test
     public void getRestaurantWithExistedTest() {
         Restaurant restaurant = restaurantService.getRestaurantById(2020L);
+
+        verify(menuItemRepository).findAllByRestaurantId(eq(2020L));
+        verify(reviewRepository).findAllByRestaurantId(eq(2020L));
+
         MenuItem menuItem = restaurant.getMenuItems().get(0);
+        Review review = restaurant.getReviews().get(0);
+
+        assertThat(review.getWriter(), is("sungjae"));
+        assertThat(review.getScore(), is(2.5));
         assertThat(restaurant.getId(), is(2020L));
         assertThat(menuItem.getName(), is("Kimchi"));
     }
@@ -72,7 +97,9 @@ public class RestaurantServiceTest {
     @Test
     public void getRestaurantsTest() {
         List<Restaurant> restaurants = restaurantService.getRestaurants();
+
         Restaurant restaurant = restaurants.get(0);
+
         assertThat(restaurant.getId(), is(2020L));
     }
 
