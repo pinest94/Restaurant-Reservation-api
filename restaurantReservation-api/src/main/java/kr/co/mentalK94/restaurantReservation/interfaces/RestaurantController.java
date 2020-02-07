@@ -17,8 +17,6 @@ public class RestaurantController {
 
     @Autowired
     private RestaurantService restaurantService;
-    private String name;
-    private String address;
 
     @GetMapping("/restaurants")
     public List<Restaurant> list() {
@@ -42,7 +40,6 @@ public class RestaurantController {
         String address = resource.getAddress();
 
         Restaurant restaurant = Restaurant.builder()
-                    .id(1L)
                     .name(name)
                     .address(address)
                     .build();
