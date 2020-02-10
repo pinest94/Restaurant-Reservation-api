@@ -1,3 +1,6 @@
 rootProject.name = 'restaurantReservation'
 
-include 'restaurantReservation-api'
+include 'restaurantReservation-common'
+include 'restaurantReservation-admin-api'
+include 'restaurantReservation-customer-api'
+
