@@ -13,9 +13,7 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 public class RestaurantServiceTest {
 
@@ -24,39 +22,12 @@ public class RestaurantServiceTest {
     @Mock
     private RestaurantRepository restaurantRepository;
 
-    @Mock
-    private MenuItemRepository menuItemRepository;
-
-    @Mock
-    private ReviewRepository reviewRepository;
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockRestaurantRepository();
-        mockMenuItemRepository();
-        mockReviewRepository();
 
-        restaurantService = new RestaurantService(restaurantRepository, menuItemRepository, reviewRepository);
-    }
-
-    private void mockReviewRepository() {
-        List<Review> reviews = new ArrayList<>();
-        reviews.add(Review.builder()
-                .writer("sungjae")
-                .score(2.5)
-                .description("너무 맛없어...")
-                .build());
-
-        given(reviewRepository.findAllByRestaurantId(2020L)).willReturn(reviews);
-    }
-
-    private void mockMenuItemRepository() {
-        List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(MenuItem.builder()
-                .name("Kimchi")
-                .build());
-        given(menuItemRepository.findAllByRestaurantId(2020L)).willReturn(menuItems);
+        restaurantService = new RestaurantService(restaurantRepository);
     }
 
     private void mockRestaurantRepository() {
@@ -77,22 +48,15 @@ public class RestaurantServiceTest {
     public void getRestaurantWithExistedTest() {
         Restaurant restaurant = restaurantService.getRestaurantById(2020L);
 
-        verify(menuItemRepository).findAllByRestaurantId(eq(2020L));
-        verify(reviewRepository).findAllByRestaurantId(eq(2020L));
-
-        MenuItem menuItem = restaurant.getMenuItems().get(0);
-        Review review = restaurant.getReviews().get(0);
-
-        assertThat(review.getWriter(), is("sungjae"));
-        assertThat(review.getScore(), is(2.5));
         assertThat(restaurant.getId(), is(2020L));
-        assertThat(menuItem.getName(), is("Kimchi"));
     }
 
     @Test(expected = RestaurantNotFoundException.class)
     public void getRestaurantWithNotExitedTest() {
         Restaurant restaurant = restaurantService.getRestaurantById(404L);
     }
+
+
 
     @Test
     public void getRestaurantsTest() {

@@ -9,12 +9,20 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @GetMapping("/reviews")
+    public List<Review> list() {
+        // List<Review> reviews = reviewService.getReviews();
+        return reviewService.getReviews();
+    }
+
 
     @PostMapping("/restaurants/{restaurantId}/reviews")
     public ResponseEntity<?> create(@PathVariable("restaurantId") Long restaurantId,

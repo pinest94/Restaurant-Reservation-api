@@ -12,14 +12,18 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ReviewController.class)
@@ -32,32 +36,15 @@ public class ReviewControllerTest {
     private ReviewService reviewService;
 
     @Test
-    public void createWithValidAttributes() throws Exception{
+    public void list() throws Exception {
 
-        given(reviewService.addReview(eq(1L), any())).willReturn(
-                Review.builder()
-                .id(123L)
-                .build()
-        );
+        List<Review> reviews = new ArrayList<>();
+        reviews.add(Review.builder().description("Cool!").build());
 
-        mvc.perform(post("/restaurants/1/reviews")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"writer\":\"hansol\", \"score\":4.5, \"description\":\"taste great!\"}"))
-                .andExpect(header().string("location", "/restaurants/1/reviews/123"))
-                .andExpect(status().isCreated());
+        given(reviewService.getReviews()).willReturn(reviews);
 
-        // 위에 테스트가 완료되면 어떠한 일이 일어나는가?
-        verify(reviewService).addReview(eq(1L), any()); // 여기서 에러난다는 것은 addReview가 실행되지 않음을 의미
+        mvc.perform(get("/reviews"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(containsString("Cool!")));
     }
-
-    @Test
-    public void createWithInvalidAttributes() throws Exception{
-        mvc.perform(post("/restaurants/1/reviews")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"))
-                .andExpect(status().isBadRequest());
-
-        verify(reviewService, never()).addReview(eq(1L), any()); // 파라미터에 never()는 실행되지 않음을 의미
-    }
-
 }

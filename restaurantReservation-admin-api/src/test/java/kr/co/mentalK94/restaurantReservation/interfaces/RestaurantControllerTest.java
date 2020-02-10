@@ -51,20 +51,13 @@ public class RestaurantControllerTest {
     public void detailWithExistedTest() throws Exception{
 
         Restaurant restaurant = Restaurant.builder().id(1001L).name("pizza school").address("Anyang").build();
-        restaurant.setMenuItems(Arrays.asList(MenuItem.builder().name("potato pizza").build()));
-        Review review = Review.builder().writer("hansol").score(4.5).description("great tasty!").build();
-
-        restaurant.setReviews(Arrays.asList(review));
 
         given(restaurantService.getRestaurantById(1001L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1001"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1001")))
-                .andExpect(content().string(containsString("\"name\":\"pizza school\"")))
-                .andExpect(content().string(containsString("hansol")))
-                .andExpect(content().string(containsString("great tasty!")))
-                .andExpect(content().string(containsString("potato pizza")));
+                .andExpect(content().string(containsString("\"name\":\"pizza school\"")));
 
     }
 
