@@ -35,3 +35,7 @@ lib/junit-4.12.jar
 
 ### nodejs ###
 /restaurantReservation-web/node_modules/**
+
+### java ###
+/restaurantReservation-admin-api/src/main/resources/application.properties
+/restaurantReservation-admin-customer-api/src/main/resources/application.properties
