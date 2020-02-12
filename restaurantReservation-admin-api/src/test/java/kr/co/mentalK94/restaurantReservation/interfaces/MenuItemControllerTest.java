@@ -1,7 +1,7 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
 import kr.co.mentalK94.restaurantReservation.application.MenuItemService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

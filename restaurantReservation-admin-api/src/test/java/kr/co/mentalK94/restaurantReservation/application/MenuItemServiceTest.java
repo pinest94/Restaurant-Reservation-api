@@ -2,8 +2,9 @@ package kr.co.mentalK94.restaurantReservation.application;
 
 import kr.co.mentalK94.restaurantReservation.domain.MenuItem;
 import kr.co.mentalK94.restaurantReservation.domain.MenuItemRepository;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -25,7 +26,7 @@ public class MenuItemServiceTest {
     @Mock
     private MenuItemRepository menuItemRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         menuItemService = new MenuItemService(menuItemRepository);
