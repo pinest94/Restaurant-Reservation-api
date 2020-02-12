@@ -3,7 +3,7 @@ package kr.co.mentalK94.restaurantReservation.interfaces;
 
 import kr.co.mentalK94.restaurantReservation.application.ReviewService;
 import kr.co.mentalK94.restaurantReservation.domain.Review;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

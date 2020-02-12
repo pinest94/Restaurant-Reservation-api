@@ -2,7 +2,7 @@ package kr.co.mentalK94.restaurantReservation.application;
 
 import kr.co.mentalK94.restaurantReservation.domain.*;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -89,7 +89,6 @@ public class RestaurantServiceTest {
         assertThat(menuItem.getName(), is("Kimchi"));
     }
 
-    @Test(expected = RestaurantNotFoundException.class)
     public void getRestaurantWithNotExitedTest() {
         Restaurant restaurant = restaurantService.getRestaurantById(404L);
     }
