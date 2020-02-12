@@ -2,6 +2,7 @@ package kr.co.mentalK94.restaurantReservation.application;
 
 
 import kr.co.mentalK94.restaurantReservation.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,7 @@ public class RestaurantService {
 
     private RestaurantRepository restaurantRepository;
 
+    @Autowired
     public RestaurantService(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
