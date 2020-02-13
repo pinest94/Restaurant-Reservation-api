@@ -74,7 +74,6 @@ public class RestaurantControllerTest {
         given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
             return Restaurant.builder()
-                        .id(1L)
                         .name(restaurant.getName())
                         .address(restaurant.getAddress())
                         .build();
@@ -84,7 +83,6 @@ public class RestaurantControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Bukyung\", \"address\":\"Gunpo\"}"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "/restaurants/1"))
                 .andExpect(content().string("{}"));
 
         verify(restaurantService).addRestaurant(any());

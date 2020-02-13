@@ -13,9 +13,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 
 public class RegionServiceTest {
 
@@ -42,14 +40,5 @@ public class RegionServiceTest {
         List<Region> regions = regionService.getRegions();
 
         assertThat(regions.get(0).getName(), is("Seoul dongsomunro"));
-    }
-
-    @Test
-    public void addRegion() {
-        Region region = regionService.addRegion("Seoul dongsomunro");
-
-        verify(regionRepository).save(any());
-
-        assertThat(region.getName(), is("Seoul dongsomunro"));
     }
 }
