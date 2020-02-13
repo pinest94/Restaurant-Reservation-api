@@ -1,6 +1,8 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
+import kr.co.mentalK94.restaurantReservation.application.CategoryService;
 import kr.co.mentalK94.restaurantReservation.application.RegionService;
+import kr.co.mentalK94.restaurantReservation.domain.Category;
 import kr.co.mentalK94.restaurantReservation.domain.Region;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -23,40 +25,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(RegionController.class)
-public class RegionControllerTest {
+@WebMvcTest(CategoryController.class)
+public class CategoryControllerTest {
 
     @Autowired
     MockMvc mvc;
 
     @MockBean
-    private RegionService regionService;
+    private CategoryService categoryService;
 
     @Test
     public void list() throws Exception {
 
-        List<Region> regions = new ArrayList<>();
-        regions.add(Region.builder().id(1L).name("Seoul dongsomunro").build());
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.builder().id(1L).name("Korean Food").build());
 
-        given(regionService.getRegions()).willReturn(regions);
+        given(categoryService.getCategories()).willReturn(categories);
 
-        mvc.perform(get("/regions"))
+        mvc.perform(get("/categories"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Seoul")));
+                .andExpect(content().string(containsString("Korean Food")));
     }
 
     @Test
     public void create() throws Exception {
 
-         Region mockRegion = Region.builder().name("Seoul dongsomunro").build();
-         given(regionService.addRegion("Seoul dongsomunro")).willReturn(mockRegion);
+        Category mockCategory = Category.builder().name("Korean Food!").build();
+        given(categoryService.addCategory("Korean Food!")).willReturn(mockCategory);
 
-        mvc.perform(post("/regions")
+        mvc.perform(post("/categories")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Seoul dongsomunro\"}"))
+                .content("{\"name\":\"Korean Food!\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(content().string("{}"));
 
-        verify(regionService).addRegion("Seoul dongsomunro");
+        verify(categoryService).addCategory("Korean Food!");
     }
 }
