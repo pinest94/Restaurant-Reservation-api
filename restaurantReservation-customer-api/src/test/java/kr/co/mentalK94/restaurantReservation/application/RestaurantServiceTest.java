@@ -63,13 +63,14 @@ public class RestaurantServiceTest {
         List<Restaurant> restaurants = new ArrayList<>();
         Restaurant restaurant = Restaurant.builder()
                 .id(2020L)
+                .categoryId(1L)
                 .name("Bob zip")
                 .address("Seoul")
                 .build();
 
         restaurants.add(restaurant);
 
-        given(restaurantRepository.findAllByAddressContaining("Seoul")).willReturn(restaurants);
+        given(restaurantRepository.findAllByAddressContainingAndCategoryId("Seoul", 1L)).willReturn(restaurants);
         given(restaurantRepository.findById(2020L)).willReturn(java.util.Optional.of(restaurant));
     }
 
@@ -96,7 +97,8 @@ public class RestaurantServiceTest {
     @Test
     public void getRestaurantsTest() {
         String region = "Seoul";
-        List<Restaurant> restaurants = restaurantService.getRestaurants(region);
+        Long categoryId = 1L;
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region, categoryId);
 
         Restaurant restaurant = restaurants.get(0);
 

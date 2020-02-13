@@ -35,7 +35,7 @@ public class RestaurantControllerTest {
     public void list() throws Exception {
 
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(Restaurant.builder().id(1103L).name("Lotteria").address("Anyang").build());
+        restaurants.add(Restaurant.builder().id(1103L).name("Lotteria").address("Anyang").categoryId(1L).build());
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -48,7 +48,7 @@ public class RestaurantControllerTest {
     @Test
     public void detailWithExistedTest() throws Exception{
 
-        Restaurant restaurant = Restaurant.builder().id(1001L).name("pizza school").address("Anyang").build();
+        Restaurant restaurant = Restaurant.builder().id(1001L).name("pizza school").address("Anyang").categoryId(1L).build();
 
         given(restaurantService.getRestaurantById(1001L)).willReturn(restaurant);
 
@@ -74,15 +74,19 @@ public class RestaurantControllerTest {
         given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
             return Restaurant.builder()
+                        .id(1234L)
                         .name(restaurant.getName())
                         .address(restaurant.getAddress())
+                        .categoryId(1L)
                         .build();
         });
 
+
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"Bukyung\", \"address\":\"Gunpo\"}"))
+                .content("{\"name\":\"Bukyung\", \"address\":\"Gunpo\", \"category\":1}"))
                 .andExpect(status().isCreated())
+
                 .andExpect(content().string("{}"));
 
         verify(restaurantService).addRestaurant(any());
@@ -101,7 +105,7 @@ public class RestaurantControllerTest {
 
         mvc.perform(patch("/restaurants/1004")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"JOKER HOUSE\", \"address\":\"Seoul\"}"))
+                .content("{\"name\":\"JOKER HOUSE\", \"address\":\"Seoul\", \"category\":1}"))
                 .andExpect(status().isOk());
 
         verify(restaurantService).updateRestaurant(1004L, "JOKER HOUSE", "Seoul");

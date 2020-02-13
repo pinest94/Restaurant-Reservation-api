@@ -32,10 +32,10 @@ public class RestaurantService {
         return restaurant;
     }
 
-    public List<Restaurant> getRestaurants(String region) {
-        // TODO: region으로 필터링
+    public List<Restaurant> getRestaurants(String region, long categoryId) {
+        // TODO: region & category로 필터링
 
-        List<Restaurant> restaurantList = restaurantRepository.findAllByAddressContaining(region);
+        List<Restaurant> restaurantList = restaurantRepository.findAllByAddressContainingAndCategoryId(region, categoryId);
 
         return restaurantList;
     }

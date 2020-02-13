@@ -35,6 +35,7 @@ public class RestaurantServiceTest {
                 .id(2020L)
                 .name("Bob zip")
                 .address("Seoul")
+                .categoryId(1L)
                 .build();
 
         restaurants.add(restaurant);
