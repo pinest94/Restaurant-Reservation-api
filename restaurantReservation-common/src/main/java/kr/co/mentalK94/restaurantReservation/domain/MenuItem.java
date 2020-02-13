@@ -2,10 +2,8 @@ package kr.co.mentalK94.restaurantReservation.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+
+import javax.persistence.*;
 
 @Entity
 @Setter
@@ -19,8 +17,10 @@ public class MenuItem {
     @GeneratedValue
     private Long id;
 
+    @Column
     private Long restaurantId;
 
+    @Column
     private String name;
 
     @Transient

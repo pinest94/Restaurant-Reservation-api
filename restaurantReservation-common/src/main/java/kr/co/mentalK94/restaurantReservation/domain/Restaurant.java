@@ -20,6 +20,9 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private Long categoryId;
+
     @NotEmpty
     @Column
     private String name;

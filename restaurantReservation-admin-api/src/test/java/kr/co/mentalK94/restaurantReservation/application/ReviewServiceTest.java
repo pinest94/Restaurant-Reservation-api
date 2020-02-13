@@ -32,18 +32,6 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void addReviewTest() {
-        Review review = Review.builder()
-                .writer("hansol")
-                .score(4.5)
-                .description("great tasty!")
-                .build();
-        reviewService.addReview(1004L, review);
-
-        verify(reviewRepository).save(any());
-    }
-
-    @Test
     public void getReviewsTest() {
 
         List<Review> mockReviews = new ArrayList<>();

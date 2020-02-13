@@ -3,6 +3,7 @@ package kr.co.mentalK94.restaurantReservation.domain;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,15 +22,19 @@ public class Review {
     @Id
     private Long id;
 
+    @Column
     private Long restaurantId; // 레스토랑 ID
 
     @NotEmpty
+    @Column
     private String writer; // 작성자
 
     @NotNull
+    @Column
     private double score; // 평점
 
     @NotEmpty
+    @Column
     private String description; // 리뷰내용
 
 }

@@ -1,7 +1,7 @@
 package kr.co.mentalK94.restaurantReservation.application;
 
 import kr.co.mentalK94.restaurantReservation.domain.*;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -30,7 +30,7 @@ public class RestaurantServiceTest {
     @Mock
     private ReviewRepository reviewRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockRestaurantRepository();
@@ -69,7 +69,7 @@ public class RestaurantServiceTest {
 
         restaurants.add(restaurant);
 
-        given(restaurantRepository.findAll()).willReturn(restaurants);
+        given(restaurantRepository.findAllByAddressContaining("Seoul")).willReturn(restaurants);
         given(restaurantRepository.findById(2020L)).willReturn(java.util.Optional.of(restaurant));
     }
 
@@ -95,7 +95,8 @@ public class RestaurantServiceTest {
 
     @Test
     public void getRestaurantsTest() {
-        List<Restaurant> restaurants = restaurantService.getRestaurants();
+        String region = "Seoul";
+        List<Restaurant> restaurants = restaurantService.getRestaurants(region);
 
         Restaurant restaurant = restaurants.get(0);
 

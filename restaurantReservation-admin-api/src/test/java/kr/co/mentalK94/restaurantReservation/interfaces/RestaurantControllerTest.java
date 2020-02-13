@@ -64,7 +64,7 @@ public class RestaurantControllerTest {
 
         given(restaurantService.getRestaurantById(404L)).willThrow(new RestaurantNotFoundException(404L));
 
-        mvc.perform(get("/restaurant/404"))
+        mvc.perform(get("/restaurants/404"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("{}"));
     }

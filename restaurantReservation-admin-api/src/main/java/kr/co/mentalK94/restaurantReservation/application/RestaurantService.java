@@ -26,6 +26,7 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getRestaurants() {
+
         List<Restaurant> restaurantList = restaurantRepository.findAll();
         return restaurantList;
     }
