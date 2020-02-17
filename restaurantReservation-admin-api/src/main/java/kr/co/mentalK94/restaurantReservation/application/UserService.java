@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public User addUser(String name, String email) {
-        User user = User.builder().name(name).email(email).build();
+        User user = User.builder().id(1L).name(name).email(email).build();
         return userRepository.save(user);
     }
 
@@ -31,6 +31,12 @@ public class UserService {
         user.setName(name);
         user.setEmail(email);
         user.setLevel(level);
+        return user;
+    }
+
+    public User deleteUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        user.deActivate();
         return user;
     }
 }

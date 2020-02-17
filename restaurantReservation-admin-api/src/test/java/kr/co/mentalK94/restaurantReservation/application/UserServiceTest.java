@@ -16,7 +16,6 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class UserServiceTest {
@@ -76,5 +75,22 @@ public class UserServiceTest {
 
         assertThat(user.getName(), is("hansol"));
         assertThat(user.isAdmin(), is(true));
+    }
+
+    @Test
+    public void deleteUser() {
+
+        Long id = 1001L;
+        int level = 3;
+
+        User mockUser = User.builder().id(id).level(level).build();
+        given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
+
+        User user = userService.deleteUser(id);
+
+        verify(userRepository).findById(eq(id));
+
+        assertThat(user.isAdmin(), is(false));
+        assertThat(user.isActive(), is(false));
     }
 }
