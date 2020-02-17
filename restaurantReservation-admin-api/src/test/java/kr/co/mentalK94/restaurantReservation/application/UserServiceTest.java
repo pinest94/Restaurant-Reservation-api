@@ -9,10 +9,15 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class UserServiceTest {
 
@@ -40,4 +45,36 @@ public class UserServiceTest {
         assertThat(users.get(0).getEmail(), is("aaa@gmail.com"));
     }
 
+    @Test
+    public void addUser() {
+
+        String email = "admin@restaurant.com";
+        String name = "admin";
+
+        User mockUser = User.builder().name(name).email(email).build();
+
+        given(userRepository.save(any())).willReturn(mockUser);
+
+        User user = userService.addUser(name, email);
+
+        assertThat(user.getName(), is(name));
+    }
+
+    @Test
+    public void updateUser() {
+        Long id = 1001L;
+        String email = "hansol@restaurant.com";
+        String name = "hansol";
+        int level = 3;
+
+        User mockUser = User.builder().id(id).name("admin").email(email).level(1).build();
+        given(userRepository.findById(id)).willReturn(Optional.of(mockUser));
+
+        User user = userService.updateUser(id, name, email, level);
+
+        verify(userRepository).findById(eq(id));
+
+        assertThat(user.getName(), is("hansol"));
+        assertThat(user.isAdmin(), is(true));
+    }
 }

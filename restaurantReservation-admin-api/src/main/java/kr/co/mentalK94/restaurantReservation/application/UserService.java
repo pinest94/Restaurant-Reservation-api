@@ -22,7 +22,15 @@ public class UserService {
     }
 
     public User addUser(String name, String email) {
+        User user = User.builder().name(name).email(email).build();
+        return userRepository.save(user);
+    }
 
-        return null;
+    public User updateUser(Long id, String name, String email, int level) {
+        User user = userRepository.findById(id).orElse(null);
+        user.setName(name);
+        user.setEmail(email);
+        user.setLevel(level);
+        return user;
     }
 }

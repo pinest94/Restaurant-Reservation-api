@@ -4,10 +4,7 @@ import kr.co.mentalK94.restaurantReservation.application.UserService;
 import kr.co.mentalK94.restaurantReservation.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,6 +32,14 @@ public class UserController {
         String url = "/users/"+user.getId();
         return ResponseEntity.created(new URI(url)).body("{}");
     }
+
     // 3. User update
+    @PatchMapping("/users/{id}")
+    public String update(@PathVariable("id") Long id,
+                         @RequestBody User resource) {
+        userService.updateUser(id, resource.getName(), resource.getEmail(), resource.getLevel());
+        return "{}";
+    }
+
     // 4. User delete -> level : 0
 }

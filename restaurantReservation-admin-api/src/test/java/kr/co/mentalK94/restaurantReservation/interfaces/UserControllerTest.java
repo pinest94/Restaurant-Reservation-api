@@ -17,10 +17,10 @@ import java.util.List;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,8 +67,23 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\" : \"admin\", \"email\":\"admin@restaurant.com\"}"))
                 .andExpect(status().isCreated());
-        
+
         verify(userService).addUser(name, email);
     }
 
+    @Test
+    public void update() throws Exception {
+
+        mvc.perform(patch("/users/1001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\" : 1001, \"name\" : \"admin\", \"email\":\"admin@restaurant.com\", \"level\":2}"))
+                .andExpect(status().isOk());
+
+        Long id = 1001L;
+        String email = "admin@restaurant.com";
+        String name = "admin";
+        int level = 2;
+
+        verify(userService).updateUser(eq(id), eq(name), eq(email) ,eq(level));
+    }
 }

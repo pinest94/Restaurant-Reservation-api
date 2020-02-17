@@ -16,7 +16,7 @@ public class User {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private String id; // 아이디
+    private Long id; // 아이디
 
     @Column
     private String userId; // 사용자 아이디
