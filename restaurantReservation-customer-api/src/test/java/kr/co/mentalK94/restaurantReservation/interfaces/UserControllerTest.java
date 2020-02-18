@@ -2,10 +2,8 @@ package kr.co.mentalK94.restaurantReservation.interfaces;
 
 import kr.co.mentalK94.restaurantReservation.application.UserService;
 import kr.co.mentalK94.restaurantReservation.domain.User;
-import org.apache.catalina.startup.Tomcat;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -39,6 +37,7 @@ public class UserControllerTest {
     public void create() throws Exception {
 
         User mockUser = User.builder()
+                .id(1001L)
                 .userId("rlagksthf209")
                 .userPassword("123456")
                 .name("hansol")
@@ -57,7 +56,7 @@ public class UserControllerTest {
 
         mvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"UserId\" : \"rlagksthf209\", \"UserPassword\" : \"123456\"" +
+                .content("{\"userId\" : \"rlagksthf209\", \"userPassword\" : \"123456\"" +
                         ", \"name\" : \"hansol\", \"email\":\"doingnow94@gmail.com\", " +
                         "\"phone\":\"010-1234-5678\", " +
                         "\"address\":\"경기 안양시 만안구 삼덕로 11번길 22\"}"))

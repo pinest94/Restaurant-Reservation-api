@@ -24,7 +24,7 @@ public class UserController {
                             resource.getName(), resource.getEmail(), resource.getPhone(),
                             resource.getAddress());
 
-        String url = "/users/" + user.getId();
+        String url = "/users/"+user.getId();
         return ResponseEntity.created(new URI(url)).body("{}");
     }
 }
