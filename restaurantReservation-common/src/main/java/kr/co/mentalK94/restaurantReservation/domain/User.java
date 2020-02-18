@@ -22,7 +22,7 @@ public class User {
     private String userId; // 사용자 아이디
 
     @Column
-    private String password; // 비밀번호
+    private String userPassword; // 비밀번호
 
     @NotEmpty
     @Column
