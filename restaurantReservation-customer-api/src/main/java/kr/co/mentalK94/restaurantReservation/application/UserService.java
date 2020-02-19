@@ -47,7 +47,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void authenticate(String userId, String userPassword) {
+    public User authenticate(String userId, String userPassword) {
         // TODO: 개발 필요
+        return null;
     }
 }

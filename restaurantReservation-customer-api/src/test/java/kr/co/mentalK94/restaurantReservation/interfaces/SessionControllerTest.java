@@ -1,5 +1,6 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
+import kr.co.mentalK94.restaurantReservation.application.AuthenticationWrongException;
 import kr.co.mentalK94.restaurantReservation.application.UserService;
 import kr.co.mentalK94.restaurantReservation.domain.User;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class SessionControllerTest {
     private UserService userService;
 
     @Test
-    public void create() throws Exception {
+    public void createWithValidAttributes() throws Exception {
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -43,5 +44,22 @@ public class SessionControllerTest {
                 .andExpect(content().string("{\"accessToken\":\"ACCESS_TOKEN\"}"));
 
         verify(userService).authenticate(eq("rlagksthf209"), eq("123456"));
+    }
+
+    @Test
+    public void createWithInValidAttributes() throws Exception {
+
+        given(userService.authenticate("rlagksthf209", "1234567"))
+                .willThrow(AuthenticationWrongException.class);
+
+        mvc.perform(post("/session")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"userId\" : \"rlagksthf209\", \"userPassword\" : \"1234567\"" +
+                        ", \"name\" : \"hansol\", \"email\":\"doingnow94@gmail.com\", " +
+                        "\"phone\":\"010-1234-5678\", " +
+                        "\"address\":\"경기 안양시 만안구 삼덕로 11번길 22\"}"))
+                .andExpect(status().isBadRequest());
+
+        verify(userService).authenticate(eq("rlagksthf209"), eq("1234567"));
     }
 }

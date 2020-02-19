@@ -1,8 +1,6 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
-import kr.co.mentalK94.restaurantReservation.application.SessionDTO;
 import kr.co.mentalK94.restaurantReservation.application.UserService;
-import kr.co.mentalK94.restaurantReservation.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +17,8 @@ public class SessionController {
     private UserService userService;
 
     @PostMapping("/session")
-    public ResponseEntity<SessionDTO> create(
-        @RequestBody User resource
+    public ResponseEntity<SessionResponseDTO> create(
+        @RequestBody SessionRequestDTO resource
         ) throws URISyntaxException {
 
         String accessToken = "ACCESS_TOKEN";
@@ -29,9 +27,9 @@ public class SessionController {
         String userPassword = resource.getUserPassword();
 
         userService.authenticate(userId, userPassword);
-        SessionDTO sessionDTO = SessionDTO.builder().accessToken(accessToken).build();
+        SessionResponseDTO sessionResponseDTO = SessionResponseDTO.builder().accessToken(accessToken).build();
 
         String url = "/session";
-        return ResponseEntity.created(new URI(url)).body(sessionDTO);
+        return ResponseEntity.created(new URI(url)).body(sessionResponseDTO);
     }
 }
