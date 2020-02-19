@@ -46,4 +46,8 @@ public class UserService {
                 .build();
         return userRepository.save(user);
     }
+
+    public void authenticate(String userId, String userPassword) {
+        // TODO: 개발 필요
+    }
 }
