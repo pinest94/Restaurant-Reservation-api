@@ -1,5 +1,6 @@
 package kr.co.mentalK94.restaurantReservation.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,5 +53,10 @@ public class User {
 
     public void deActivate() {
         setLevel(0);
+    }
+
+    @JsonIgnore
+    public String getAccessToken() {
+        return userPassword.substring(0, 3);
     }
 }

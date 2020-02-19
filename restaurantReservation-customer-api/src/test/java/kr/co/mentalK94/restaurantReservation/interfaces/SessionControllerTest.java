@@ -33,6 +33,12 @@ public class SessionControllerTest {
     @Test
     public void createWithValidAttributes() throws Exception {
 
+        String userId = "rlagksthf209";
+        String userPassword = "123456";
+
+        User mockUser = User.builder().userPassword("123456").build();
+        given(userService.authenticate(userId, userPassword)).willReturn(mockUser);
+
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"userId\" : \"rlagksthf209\", \"userPassword\" : \"123456\"" +
@@ -41,7 +47,7 @@ public class SessionControllerTest {
                         "\"address\":\"경기 안양시 만안구 삼덕로 11번길 22\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/session"))
-                .andExpect(content().string("{\"accessToken\":\"ACCESS_TOKEN\"}"));
+                .andExpect(content().string("{\"accessToken\":\"123\"}"));
 
         verify(userService).authenticate(eq("rlagksthf209"), eq("123456"));
     }
