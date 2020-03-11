@@ -1,5 +1,6 @@
 package kr.co.mentalK94.restaurantReservation.config;
 
+import kr.co.mentalK94.restaurantReservation.utils.JWTUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,5 +24,10 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JWTUtil jwtUtil() {
+        return new JWTUtil();
     }
 }

@@ -54,9 +54,4 @@ public class User {
     public void deActivate() {
         setLevel(0);
     }
-
-    @JsonIgnore
-    public String getAccessToken() {
-        return userPassword.substring(0, 3);
-    }
 }
