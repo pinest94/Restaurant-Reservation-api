@@ -28,10 +28,11 @@ public class SessionController {
 
         String userId = resource.getUserId();
         String userPassword = resource.getUserPassword();
+        String name = resource.getName();
 
         User user = userService.authenticate(userId, userPassword);
 
-        String accessToken = jwtUtil.createToken(user.getUserId(), user.getUserPassword());
+        String accessToken = jwtUtil.createToken(user.getUserId(), name);
 
         SessionResponseDTO sessionResponseDTO = SessionResponseDTO.builder().accessToken(accessToken).build();
 

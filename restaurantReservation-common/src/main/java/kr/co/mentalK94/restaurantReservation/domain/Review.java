@@ -25,7 +25,6 @@ public class Review {
     @Column
     private Long restaurantId; // 레스토랑 ID
 
-    @NotEmpty
     @Column
     private String writer; // 작성자
 

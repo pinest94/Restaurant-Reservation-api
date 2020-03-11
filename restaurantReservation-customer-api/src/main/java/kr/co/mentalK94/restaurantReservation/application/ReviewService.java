@@ -15,10 +15,18 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public Review addReview(Long restaurantId, Review review) {
-        // TODO: review 추가
+    public Review addReview(Long restaurantId, String name,
+                            double score, String description) {
 
-        review.setRestaurantId(restaurantId);
+        Review review = Review.builder()
+                        .restaurantId(restaurantId)
+                        .writer(name)
+                        .score(score)
+                        .description(description)
+                        .build();
+
+        // TODO: ID -> generateValue로 만들어야함
+        // review.setId(1L);
         return reviewRepository.save(review);
     }
 }

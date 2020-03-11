@@ -1,9 +1,9 @@
 package kr.co.mentalK94.restaurantReservation.utils;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
 
 import java.security.Key;
 
@@ -15,16 +15,20 @@ public class JWTUtil {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String createToken(String userId, String userPassword) {
+    public String createToken(String userId, String name) {
 
         // TODO: USE JJWT
-
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .claim("userId", userId)
-                .claim("userPassword", userPassword)
+                .claim("name", name)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
 
-        return token;
+    public Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .parseClaimsJws(token)
+                .getBody();
     }
 }
