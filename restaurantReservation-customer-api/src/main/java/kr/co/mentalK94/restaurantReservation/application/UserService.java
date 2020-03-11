@@ -51,7 +51,6 @@ public class UserService {
 
     public User authenticate(String userId, String userPassword) {
 
-        // TODO: 개발 필요
         User user = userRepository.findByUserId(userId).orElseThrow(() -> new AuthenticationWrongException());
 
         if (!passwordEncoder.matches(userPassword, user.getUserPassword())) {

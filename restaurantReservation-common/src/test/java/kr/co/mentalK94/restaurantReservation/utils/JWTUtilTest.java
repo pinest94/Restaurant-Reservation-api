@@ -9,7 +9,9 @@ public class JWTUtilTest {
 
     @Test
     public void createToken() {
-        JWTUtil jwtUtil = new JWTUtil();
+        String secretKey = "123456789987654321123456789987654321";
+
+        JWTUtil jwtUtil = new JWTUtil(secretKey);
 
         String token = jwtUtil.createToken("rlagksthf209", "123456");
 

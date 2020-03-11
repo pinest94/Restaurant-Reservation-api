@@ -31,14 +31,19 @@ public class SessionControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private JWTUtil jwtUtil;
+
     @Test
     public void createWithValidAttributes() throws Exception {
 
         String userId = "rlagksthf209";
         String userPassword = "123456";
 
-        User mockUser = User.builder().userPassword("123456").build();
+        User mockUser = User.builder().userId(userId).userPassword(userPassword).build();
         given(userService.authenticate(userId, userPassword)).willReturn(mockUser);
+
+        given(jwtUtil.createToken(userId, userPassword)).willReturn("hansol.getJob");
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -48,7 +53,7 @@ public class SessionControllerTest {
                         "\"address\":\"경기 안양시 만안구 삼덕로 11번길 22\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/session"))
-                .andExpect(content().string(containsString("{\"accessToken\":\"")))
+                .andExpect(content().string(containsString("{\"accessToken\":\"hansol.getJob\"}")))
                 .andExpect(content().string(containsString(".")));
 
         verify(userService).authenticate(eq("rlagksthf209"), eq("123456"));
