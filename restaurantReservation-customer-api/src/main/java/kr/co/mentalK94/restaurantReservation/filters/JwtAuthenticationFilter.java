@@ -34,15 +34,12 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
                                     throws IOException, ServletException {
         // TODO: JWT
         Authentication authentication = getAuthentication(request);
-        System.out.println("xx : " + authentication);
 
         if(authentication != null) {
-            System.out.println("^^");
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(authentication);
         }
 
-        System.out.println("yy : " + authentication);
         chain.doFilter(request, response);
     }
 
