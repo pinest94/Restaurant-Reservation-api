@@ -39,3 +39,4 @@ lib/junit-4.12.jar
 ### java ###
 /restaurantReservation-admin-api/src/main/resources/application.properties
 /restaurantReservation-admin-customer-api/src/main/resources/application.properties
+/restaurantReservation-admin-login-api/src/main/resources/application.properties

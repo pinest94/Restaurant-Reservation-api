@@ -48,15 +48,4 @@ public class UserService {
                 .build();
         return userRepository.save(user);
     }
-
-    public User authenticate(String userId, String userPassword) {
-
-        User user = userRepository.findByUserId(userId).orElseThrow(() -> new AuthenticationWrongException());
-
-        if (!passwordEncoder.matches(userPassword, user.getUserPassword())) {
-            throw new AuthenticationWrongException();
-        }
-
-        return user;
-    }
 }
