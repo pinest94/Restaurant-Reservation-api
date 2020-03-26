@@ -14,6 +14,12 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @GetMapping("/allRestaurants")
+    public List<Restaurant> allList() {
+        List<Restaurant> restaurants = restaurantService.getAllRestaurants();
+        return restaurants;
+    }
+
     @GetMapping("/restaurants")
     public List<Restaurant> list(@RequestParam("region") String region, @RequestParam("category") Long categoryId) {
         List<Restaurant> restaurants = restaurantService.getRestaurants(region, categoryId);
