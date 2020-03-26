@@ -37,19 +37,19 @@ public class SessionControllerTest {
     @Test
     public void createWithValidAttributes() throws Exception {
 
-        String userId = "rlagksthf209";
-        String userPassword = "123456";
+        String email = "doingnow94@gmail.com";
+        String password = "123456";
         String name = "hansol";
 
-        User mockUser = User.builder().userId(userId).userPassword(userPassword).build();
-        given(userService.authenticate(userId, userPassword)).willReturn(mockUser);
+        User mockUser = User.builder().email(email).name(name).password(password).build();
+        given(userService.authenticate(email, password)).willReturn(mockUser);
 
-        given(jwtUtil.createToken(userId, name)).willReturn("hansol.getJob");
+        given(jwtUtil.createToken(email, name)).willReturn("hansol.getJob");
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"userId\" : \"rlagksthf209\", \"userPassword\" : \"123456\"" +
-                        ", \"name\" : \"hansol\", \"email\":\"doingnow94@gmail.com\", " +
+                .content("{\"email\":\"doingnow94@gmail.com\", \"password\" : \"123456\"" +
+                        ", \"name\" : \"hansol\", " +
                         "\"phone\":\"010-1234-5678\", " +
                         "\"address\":\"경기 안양시 만안구 삼덕로 11번길 22\"}"))
                 .andExpect(status().isCreated())
@@ -57,23 +57,23 @@ public class SessionControllerTest {
                 .andExpect(content().string(containsString("{\"accessToken\":\"hansol.getJob\"}")))
                 .andExpect(content().string(containsString(".")));
 
-        verify(userService).authenticate(eq("rlagksthf209"), eq("123456"));
+        verify(userService).authenticate(eq("doingnow94@gmail.com"), eq("123456"));
     }
 
     @Test
     public void createWithInValidAttributes() throws Exception {
 
-        given(userService.authenticate("rlagksthf209", "1234567"))
+        given(userService.authenticate("doingnow94@gmail.com", "1234567"))
                 .willThrow(AuthenticationWrongException.class);
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"userId\" : \"rlagksthf209\", \"userPassword\" : \"1234567\"" +
-                        ", \"name\" : \"hansol\", \"email\":\"doingnow94@gmail.com\", " +
+                .content("{\"email\":\"doingnow94@gmail.com\", \"password\" : \"1234567\"" +
+                        ", \"name\" : \"hansol\", " +
                         "\"phone\":\"010-1234-5678\", " +
                         "\"address\":\"경기 안양시 만안구 삼덕로 11번길 22\"}"))
                 .andExpect(status().isBadRequest());
 
-        verify(userService).authenticate(eq("rlagksthf209"), eq("1234567"));
+        verify(userService).authenticate(eq("doingnow94@gmail.com"), eq("1234567"));
     }
 }

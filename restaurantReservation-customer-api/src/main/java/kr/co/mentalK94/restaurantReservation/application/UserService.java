@@ -1,12 +1,9 @@
 package kr.co.mentalK94.restaurantReservation.application;
 
-import kr.co.mentalK94.restaurantReservation.domain.EmailExistedException;
 import kr.co.mentalK94.restaurantReservation.domain.User;
 import kr.co.mentalK94.restaurantReservation.domain.UserExistedException;
 import kr.co.mentalK94.restaurantReservation.domain.UserRepository;
-import org.h2.security.SHA256;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,23 +22,18 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User addUser(String userId, String userPassword, String name, String email, String phone, String address) {
-        Optional<User> existedUserId = userRepository.findByUserId(userId);
+    public User addUser(String email, String password, String name, String phone, String address) {
         Optional<User> existedEmail = userRepository.findByEmail(email);
-        if(existedUserId.isPresent()) {
-            throw new UserExistedException(userId);
-        }
 
         if(existedEmail.isPresent()) {
-            throw new EmailExistedException(email);
+            throw new UserExistedException(email);
         }
 
-        String encodedPassword = passwordEncoder.encode(userPassword);
+        String encodedPassword = passwordEncoder.encode(password);
 
-        User user = User.builder().userId(userId)
-                .userPassword(encodedPassword)
+        User user = User.builder().email(email)
+                .password(encodedPassword)
                 .name(name)
-                .email(email)
                 .phone(phone)
                 .address(address)
                 .level(1)

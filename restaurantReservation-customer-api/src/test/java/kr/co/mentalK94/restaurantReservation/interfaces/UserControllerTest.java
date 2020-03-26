@@ -38,33 +38,31 @@ public class UserControllerTest {
 
         User mockUser = User.builder()
                 .id(1001L)
-                .userId("rlagksthf209")
-                .userPassword("123456")
-                .name("hansol")
                 .email("doingnow94@gmail.com")
+                .password("123456")
+                .name("hansol")
                 .address("경기 안양시 만안구 삼덕로 11번길 22")
                 .phone("010-1234-5678")
                 .build();
 
-        given(userService.addUser("rlagksthf209",
+        given(userService.addUser("doingnow94@gmail.com",
                 "123456",
                 "hansol",
-                "doingnow94@gmail.com",
                 "010-1234-5678",
                 "경기 안양시 만안구 삼덕로 11번길 22"))
                 .willReturn(mockUser);
 
         mvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"userId\" : \"rlagksthf209\", \"userPassword\" : \"123456\"" +
-                        ", \"name\" : \"hansol\", \"email\":\"doingnow94@gmail.com\", " +
+                .content("{\"email\":\"doingnow94@gmail.com\",  \"password\" : \"123456\"" +
+                        ", \"name\" : \"hansol\", " +
                         "\"phone\":\"010-1234-5678\", " +
                         "\"address\":\"경기 안양시 만안구 삼덕로 11번길 22\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", "/users/1001"));
 
-        verify(userService).addUser(eq("rlagksthf209"), eq("123456"),
-                eq("hansol"), eq("doingnow94@gmail.com"), eq("010-1234-5678")
+        verify(userService).addUser(eq("doingnow94@gmail.com"), eq("123456"),
+                eq("hansol"), eq("010-1234-5678")
                 ,eq("경기 안양시 만안구 삼덕로 11번길 22"));
 
     }

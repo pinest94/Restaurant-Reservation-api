@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class SessionRequestDTO {
 
-    private String userId;
+    private String email;
 
-    private String userPassword;
+    private String password;
 
     private String name;
 }

@@ -26,13 +26,13 @@ public class SessionController {
         @RequestBody SessionRequestDTO resource
         ) throws URISyntaxException {
 
-        String userId = resource.getUserId();
-        String userPassword = resource.getUserPassword();
+        String email = resource.getEmail();
+        String password = resource.getPassword();
         //String name = resource.getName();
 
-        User user = userService.authenticate(userId, userPassword);
+        User user = userService.authenticate(email, password);
 
-        String accessToken = jwtUtil.createToken(user.getUserId(), user.getName());
+        String accessToken = jwtUtil.createToken(user.getEmail(), user.getName());
 
         SessionResponseDTO sessionResponseDTO = SessionResponseDTO.builder().accessToken(accessToken).build();
 

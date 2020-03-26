@@ -39,30 +39,30 @@ public class UserServiceTest {
     @Test
     public void authenticateWithInValidAttributes() {
 
-        String userId = "rlagksthf";
-        String userPassword = "123456";
+        String email = "doingnow94@gmail.com";
+        String password = "123456";
 
-        given(userRepository.findByUserId(userId)).willReturn(Optional.empty());
+        given(userRepository.findByEmail(email)).willReturn(Optional.empty());
 
         Exception exception = assertThrows(
                 AuthenticationWrongException.class,
-                () -> userService.authenticate(userId, userPassword));
+                () -> userService.authenticate(email, password));
     }
 
     @Test
     public void authenticateWithValidAttributes() {
 
-        String userId = "rlagksthf209";
-        String userPassword = "123456";
+        String email = "doingnow94@gmail.com";
+        String password = "123456";
 
-        User mockUser = User.builder().userId(userId).build();
-        given(userRepository.findByUserId(userId)).willReturn(Optional.of(mockUser));
+        User mockUser = User.builder().email(email).build();
+        given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
 
         given(passwordEncoder.matches(any(), any())).willReturn(true);
 
-        User user = userService.authenticate(userId, userPassword);
+        User user = userService.authenticate(email, password);
 
-        assertThat(user.getUserId(), is(userId));
+        assertThat(user.getEmail(), is(email));
 
     }
 }

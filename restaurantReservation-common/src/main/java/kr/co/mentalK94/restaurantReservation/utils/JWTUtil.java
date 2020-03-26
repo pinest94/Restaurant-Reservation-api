@@ -15,11 +15,11 @@ public class JWTUtil {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String createToken(String userId, String name) {
+    public String createToken(String email, String name) {
 
         // TODO: USE JJWT
         return Jwts.builder()
-                .claim("userId", userId)
+                .claim("email", email)
                 .claim("name", name)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

@@ -20,10 +20,7 @@ public class User {
     private Long id; // 아이디
 
     @Column
-    private String userId; // 사용자 아이디
-
-    @Column
-    private String userPassword; // 비밀번호
+    private String password; // 비밀번호
 
     @NotEmpty
     @Column

@@ -22,7 +22,7 @@ public class JWTUtilTest {
     @Test
     public void createToken() {
 
-        String token = jwtUtil.createToken("rlagksthf209", "hansol");
+        String token = jwtUtil.createToken("doingnow94@gmail.com", "hansol");
 
         assertThat(token, containsString("."));
     }
@@ -32,8 +32,7 @@ public class JWTUtilTest {
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJybGFna3N0aGYyMDkiLCJuYW1lIjoiaGFuc29sIn0.WjDAJRtp4qYo-5WZ0bgctaGobn6SsrtvXBy0mE25uwQ";
 
         Claims claims = jwtUtil.getClaims(token);
-
-        assertThat(claims.get("userId"), is("rlagksthf209"));
+        
         assertThat(claims.get("name"), is("hansol"));
     }
 }

@@ -1,14 +1,10 @@
 package kr.co.mentalK94.restaurantReservation.application;
 
-import kr.co.mentalK94.restaurantReservation.domain.EmailExistedException;
 import kr.co.mentalK94.restaurantReservation.domain.User;
-import kr.co.mentalK94.restaurantReservation.domain.UserExistedException;
 import kr.co.mentalK94.restaurantReservation.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -23,11 +19,11 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User authenticate(String userId, String userPassword) {
+    public User authenticate(String email, String userPassword) {
 
-        User user = userRepository.findByUserId(userId).orElseThrow(() -> new AuthenticationWrongException());
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new AuthenticationWrongException());
 
-        if (!passwordEncoder.matches(userPassword, user.getUserPassword())) {
+        if (!passwordEncoder.matches(userPassword, user.getPassword())) {
             throw new AuthenticationWrongException();
         }
 

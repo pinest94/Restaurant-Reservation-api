@@ -20,8 +20,8 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<?> create(@RequestBody User resource) throws URISyntaxException {
 
-        User user = userService.addUser(resource.getUserId(), resource.getUserPassword(),
-                            resource.getName(), resource.getEmail(), resource.getPhone(),
+        User user = userService.addUser(resource.getEmail(), resource.getPassword(),
+                            resource.getName(), resource.getPhone(),
                             resource.getAddress());
 
         String url = "/users/"+user.getId();
