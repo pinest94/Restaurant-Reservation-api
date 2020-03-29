@@ -26,6 +26,9 @@ public class User {
     @Column
     private String name; // 이름
 
+    @Column
+    private Long restaurantId; // 가게 id(가게 주인인 경우에 해당)
+
     @NotEmpty
     @Column
     private String email; // 이메일
@@ -50,5 +53,14 @@ public class User {
 
     public void deActivate() {
         setLevel(0);
+    }
+
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
+        this.level = 2;
+}
+
+    public boolean isRestaurantOwner() { // 가게 주인인지 확인
+        return this.level == 2;
     }
 }

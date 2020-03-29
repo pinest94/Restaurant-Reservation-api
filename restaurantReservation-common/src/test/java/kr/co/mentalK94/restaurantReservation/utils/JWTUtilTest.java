@@ -22,7 +22,7 @@ public class JWTUtilTest {
     @Test
     public void createToken() {
 
-        String token = jwtUtil.createToken("doingnow94@gmail.com", "hansol");
+        String token = jwtUtil.createToken("doingnow94@gmail.com", "hansol", null);
 
         assertThat(token, containsString("."));
     }
