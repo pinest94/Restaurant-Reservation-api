@@ -16,11 +16,11 @@ public class JWTUtil {
         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String createToken(String email, String name, Long restaurantId) {
+    public String createToken(Long userId, String name, Long restaurantId) {
 
         // TODO: USE JJWT
         JwtBuilder jwtBuilder = Jwts.builder()
-                .claim("email", email)
+                .claim("userId", userId)
                 .claim("name", name);
 
         if(restaurantId != null) { // 가게 주인인 경우 restaurantId가 존재하므로 추가

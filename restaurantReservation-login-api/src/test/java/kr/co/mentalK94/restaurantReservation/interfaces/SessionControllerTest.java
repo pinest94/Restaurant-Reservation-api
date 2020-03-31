@@ -37,6 +37,7 @@ public class SessionControllerTest {
     @Test
     public void createWithValidAttributes() throws Exception {
 
+        Long userId = 1004L;
         String email = "doingnow94@gmail.com";
         String password = "123456";
         String name = "hansol";
@@ -44,7 +45,7 @@ public class SessionControllerTest {
         User mockUser = User.builder().email(email).name(name).password(password).build();
         given(userService.authenticate(email, password)).willReturn(mockUser);
 
-        given(jwtUtil.createToken(email, name, null)).willReturn("hansol.getJob");
+        given(jwtUtil.createToken(userId, name, null)).willReturn("hansol.getJob");
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -1,6 +1,7 @@
 package kr.co.mentalK94.restaurantReservation.interfaces;
 
 import kr.co.mentalK94.restaurantReservation.application.ReservationService;
+import kr.co.mentalK94.restaurantReservation.domain.Reservation;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@RunWith(SpringRunner.class)
 @WebMvcTest(ReservationController.class)
 public class ReservationControllerTest {
 
@@ -27,7 +30,11 @@ public class ReservationControllerTest {
 
     @Test
     public void create() throws Exception {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJybGFna3N0aGYyMDkiLCJuYW1lIjoiaGFuc29sIn0.WjDAJRtp4qYo-5WZ0bgctaGobn6SsrtvXBy0mE25uwQ";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjYsIm5hbWUiOiLquYDtlZzshpQifQ.52oAO9QUJmq_wQPpLzF-tp2wqdweRv7c3gReapmThsY";
+
+
+        Reservation mockReservation = Reservation.builder().id(1L).build();
+        given(reservationService.addReservation(any(), any(), any(), any(), any(), anyInt())).willReturn(mockReservation);
 
         mvc.perform(post("/restaurants/123/reservations")
                 .header("Authorization","Bearer " + token)
@@ -36,9 +43,9 @@ public class ReservationControllerTest {
                         "\"partySize\":16}"))
                 .andExpect(status().isCreated());
 
-        Long userId = 1L;
+        Long userId = 6L;
         Long restaurantId = 123L;
-        String name = "hansol";
+        String name = "김한솔";
         String date = "2020-03-31";
         String time = "17:00";
         int partySize = 16;

@@ -22,17 +22,17 @@ public class JWTUtilTest {
     @Test
     public void createToken() {
 
-        String token = jwtUtil.createToken("doingnow94@gmail.com", "hansol", null);
+        String token = jwtUtil.createToken(1004L, "hansol", null);
 
         assertThat(token, containsString("."));
     }
 
     @Test
     public void getClaims() {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJybGFna3N0aGYyMDkiLCJuYW1lIjoiaGFuc29sIn0.WjDAJRtp4qYo-5WZ0bgctaGobn6SsrtvXBy0mE25uwQ";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjYsIm5hbWUiOiLquYDtlZzshpQifQ.52oAO9QUJmq_wQPpLzF-tp2wqdweRv7c3gReapmThsY";
 
         Claims claims = jwtUtil.getClaims(token);
-        
-        assertThat(claims.get("name"), is("hansol"));
+
+        assertThat(claims.get("name"), is("김한솔"));
     }
 }

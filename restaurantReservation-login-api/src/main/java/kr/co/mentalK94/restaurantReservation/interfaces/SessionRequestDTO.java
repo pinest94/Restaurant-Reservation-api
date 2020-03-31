@@ -10,4 +10,6 @@ public class SessionRequestDTO {
     private String password;
 
     private String name;
+
+    private Long userId;
 }

@@ -32,9 +32,9 @@ public class ReviewControllerTest {
 
     @Test
     public void createWithValidAttributes() throws Exception{
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJybGFna3N0aGYyMDkiLCJuYW1lIjoiaGFuc29sIn0.WjDAJRtp4qYo-5WZ0bgctaGobn6SsrtvXBy0mE25uwQ";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjYsIm5hbWUiOiLquYDtlZzshpQifQ.52oAO9QUJmq_wQPpLzF-tp2wqdweRv7c3gReapmThsY";
 
-        given(reviewService.addReview(123L, "hansol", 4.5, "taste great!")).willReturn(
+        given(reviewService.addReview(123L, "김한솔", 4.5, "taste great!")).willReturn(
                 Review.builder()
                 .id(1L)
                 .build()
@@ -48,7 +48,7 @@ public class ReviewControllerTest {
                 .andExpect(status().isCreated());
 
         // 위에 테스트가 완료되면 어떠한 일이 일어나는가?
-        verify(reviewService).addReview(eq(123L), eq("hansol"), eq(4.5), eq("taste great!")); // 여기서 에러난다는 것은 addReview가 실행되지 않음을 의미
+        verify(reviewService).addReview(eq(123L), eq("김한솔"), eq(4.5), eq("taste great!")); // 여기서 에러난다는 것은 addReview가 실행되지 않음을 의미
     }
 
     @Test

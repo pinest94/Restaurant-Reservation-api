@@ -2,10 +2,8 @@ package kr.co.mentalK94.restaurantReservation.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -18,10 +16,14 @@ import javax.validation.constraints.NotNull;
 public class Reservation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; // 예약 Id
 
+    @Column
     private Long userId; // 예약자 Id
+
+    @Column
+    private Long restaurantId; // 예약할 식당 Id
 
     @Column
     private String name; // 예약자 이름
@@ -36,6 +38,7 @@ public class Reservation {
 
     @Column
     @NotNull
+    @Min(1)
     private int partySize; // 인원 수
 
 }
