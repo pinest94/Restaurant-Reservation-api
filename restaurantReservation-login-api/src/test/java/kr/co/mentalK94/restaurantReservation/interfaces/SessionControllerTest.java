@@ -42,7 +42,7 @@ public class SessionControllerTest {
         String password = "123456";
         String name = "hansol";
 
-        User mockUser = User.builder().email(email).name(name).password(password).build();
+        User mockUser = User.builder().id(userId).email(email).name(name).password(password).build();
         given(userService.authenticate(email, password)).willReturn(mockUser);
 
         given(jwtUtil.createToken(userId, name, null)).willReturn("hansol.getJob");
